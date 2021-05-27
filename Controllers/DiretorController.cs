@@ -79,8 +79,34 @@ namespace filmes_api_rest.Controllers
 
             return response;
 
-            
                 
+        }
+         [HttpPut]
+
+            public void Alterar(Models.TbDiretor diretor)
+            {
+                Models.apiDBContext ctx = new Models.apiDBContext();
+
+                Models.TbDiretor atual = ctx.TbDiretor.FirstOrDefault(x => x.IdDiretor == diretor.IdDiretor);
+
+                atual.NmDiretor = diretor.NmDiretor;
+                atual.DtNascimento = diretor.DtNascimento;
+                
+                ctx.SaveChanges();
+
+            }
+
+        [HttpDelete]
+
+        public void Deletar (Models.TbDiretor diretor)
+        {
+            Models.apiDBContext ctx = new Models.apiDBContext();
+
+             Models.TbDiretor atual = ctx.TbDiretor.First(x => x.IdDiretor == diretor.IdDiretor);
+
+             ctx.Remove(atual);
+
+             ctx.SaveChanges();
         }
     }
 }

@@ -45,13 +45,33 @@ namespace filmes_api_rest.Controllers
 
         [HttpGet("consultar/diretor")]
 
-        public List<Models.TbDiretor> Cosultar()
+        public List<Models.TbDiretor> Cosultar(string diretor, string genero)
         {
             Models.apiDBContext ctx = new Models.apiDBContext();
 
-            List<Models.TbDiretor> lista = ctx.TbDiretor.Include(x => x.IdFilmeNavigation).ToList();
+            List<Models.TbDiretor> lista = ctx.TbDiretor
+                                            .Include(x => x.IdFilmeNavigation)
+                                            .Where(x => x.NmDiretor.Contains(diretor) 
+                                            && x.IdFilmeNavigation.DsGenero == genero)
+                                            .ToList();
 
             return lista;
+        }
+
+        [HttpGet("consultar/filme")]
+
+        public List<Models.TbFilme> ConsultarFilmes(string genero, string diretor)
+        {
+            Models.apiDBContext ctx = new Models.apiDBContext();
+
+            List<Models.TbFilme> filmes = 
+                    ctx.TbFilme
+                    .Include(x => x.TbDiretor)
+                    .Where(x => x.DsGenero == genero
+                                && x.TbDiretor.All(d => d.NmDiretor.StartsWith(diretor)))
+                    .ToList();
+
+            return filmes;
         }
 
 
