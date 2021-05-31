@@ -11,52 +11,50 @@ namespace filmes_api_rest.Controllers
     [Route("[controller]")]
     public class FilmeController : ControllerBase
     {
-         Database.FilmeDatabase db = new Database.FilmeDatabase();
+
+         Business.FilmeBusiness b = new Business.FilmeBusiness();
         
         [HttpPost]
         public Models.TbFilme Salvar(Models.TbFilme filme)
         {
-            Models.TbFilme film = db.Salvar(filme);
-
+            Models.TbFilme film = b.Salvar(filme);
             return film;
         }
 
         [HttpGet]
         public List<Models.TbFilme> Listar()
         {
-            List<Models.TbFilme> lista = db.Listar();
+            List<Models.TbFilme> lista = b.Listar();
 
             return lista;
         }
+
         [HttpGet("consultar")]
-    
         public List<Models.TbFilme> Consultar(string genero)
         {
             
-            List<Models.TbFilme> lista = db.Consultar(genero);
+            List<Models.TbFilme> lista = b.Consultar(genero);
 
             return lista;
         }
+        
         [HttpPut]
-
         public void Alterar (Models.TbFilme filme)
         {
-            db.Alterar(filme);
+            b.Alterar(filme);
 
         }
 
        [HttpPut("disponibilidade")]
-
         public void AlterarDispobinibilidade(Models.TbFilme filme)
         {
-            db.AlterarDispobinibilidade(filme);
+            b.AlterarDispobinibilidade(filme);
         }
 
         [HttpDelete]
-
         public void Remover(Models.TbFilme filme)
         {
-            db.Remover(filme);
+            b.Remover(filme);
         }
 
     }

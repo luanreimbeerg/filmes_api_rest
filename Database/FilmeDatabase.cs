@@ -15,7 +15,6 @@ namespace filmes_api_rest.Database
 
             ctx.TbFilme.Add(filme);
             ctx.SaveChanges();
-
             return filme;
        }
 
@@ -35,6 +34,13 @@ namespace filmes_api_rest.Database
             List<Models.TbFilme> lista = ctx.TbFilme.Where(x => x.DsGenero == genero).ToList();
 
             return lista;
+        }
+
+        public bool FilmeExiste (string nome)
+        {
+            Models.apiDBContext ctx = new Models.apiDBContext();
+            bool existe = ctx.TbFilme.Any(x => x.NmFilme == nome);
+           return existe;
         }
 
          public void Alterar (Models.TbFilme filme)
