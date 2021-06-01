@@ -15,10 +15,20 @@ namespace filmes_api_rest.Controllers
          Business.FilmeBusiness b = new Business.FilmeBusiness();
         
         [HttpPost]
-        public Models.TbFilme Salvar(Models.TbFilme filme)
+        public ActionResult<Models.TbFilme> Salvar(Models.TbFilme filme)
         {
-            Models.TbFilme film = b.Salvar(filme);
-            return film;
+            try
+            {
+                Models.TbFilme film = b.Salvar(filme);
+                return film;
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
+
         }
 
         [HttpGet]
