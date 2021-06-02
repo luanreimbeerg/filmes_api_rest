@@ -68,50 +68,20 @@ namespace filmes_api_rest.Controllers
         [HttpPut]
         public void Alterar (Models.TbFilme filme)
         {
-           try
-           {
-                b.Alterar(filme);
-           }
-           catch (System.Exception ex)
-           {
-               return new BadRequestObjectResult(
-                    new Models.Response.ErroResponse(ex, 400)
-                );
-               
-           }
+            b.Alterar(filme);
 
         }
 
        [HttpPut("disponibilidade")]
         public void AlterarDispobinibilidade(Models.TbFilme filme)
         {
-            try
-            {
-                b.AlterarDispobinibilidade(filme);
-            }
-            catch (System.Exception ex)
-            {
-                
-                return new BadRequestObjectResult(
-                    new Models.Response.ErroResponse(ex, 400)
-                );
-            }
+            b.AlterarDispobinibilidade(filme);
         }
 
         [HttpDelete]
         public void Remover(Models.TbFilme filme)
         {
-             try
-            {
-                b.Remover(filme);
-            }
-            catch (System.Exception ex)
-            {
-                
-                return new BadRequestObjectResult(
-                    new Models.Response.ErroResponse(ex, 400)
-                );
-            }
+            b.Remover(filme);
         }
 
     }
