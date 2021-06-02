@@ -32,39 +32,86 @@ namespace filmes_api_rest.Controllers
         }
 
         [HttpGet]
-        public List<Models.TbFilme> Listar()
+        public ActionResult<List<Models.TbFilme>> Listar()
         {
-            List<Models.TbFilme> lista = b.Listar();
+            try
+            {
+                List<Models.TbFilme> lista = b.Listar();
 
             return lista;
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
         }
 
         [HttpGet("consultar")]
-        public List<Models.TbFilme> Consultar(string genero)
+        public ActionResult<List<Models.TbFilme>> Consultar(string genero)
         {
-            
+            try
+            {
+                
             List<Models.TbFilme> lista = b.Consultar(genero);
-
             return lista;
+            }
+            catch (System.Exception ex)
+            {
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
         }
         
         [HttpPut]
         public void Alterar (Models.TbFilme filme)
         {
-            b.Alterar(filme);
+           try
+           {
+                b.Alterar(filme);
+           }
+           catch (System.Exception ex)
+           {
+               return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+               
+           }
 
         }
 
        [HttpPut("disponibilidade")]
         public void AlterarDispobinibilidade(Models.TbFilme filme)
         {
-            b.AlterarDispobinibilidade(filme);
+            try
+            {
+                b.AlterarDispobinibilidade(filme);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
         }
 
         [HttpDelete]
         public void Remover(Models.TbFilme filme)
         {
-            b.Remover(filme);
+             try
+            {
+                b.Remover(filme);
+            }
+            catch (System.Exception ex)
+            {
+                
+                return new BadRequestObjectResult(
+                    new Models.Response.ErroResponse(ex, 400)
+                );
+            }
         }
 
     }
