@@ -11,8 +11,6 @@ namespace filmes_api_rest.Database
 {
     public class DiretorDatabase
     {
-         public class DiretorController : ControllerBase
-    {
         
 
         public Models.TbDiretor Salvar(Models.TbDiretor diretor)
@@ -100,6 +98,6 @@ namespace filmes_api_rest.Database
 
              ctx.SaveChanges();
         }
-    }
+    
     }
 }
