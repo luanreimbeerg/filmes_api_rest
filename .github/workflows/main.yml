@@ -26,7 +26,7 @@ jobs:
       - name: Sonarqube Begin
         run: | 
           dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:"teste_action" /d:sonar.host.url="https://sonarcloud.io"  /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
+          dotnet sonarscanner begin /k:"teste_action" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
       - name: Build
         run: dotnet build
 
