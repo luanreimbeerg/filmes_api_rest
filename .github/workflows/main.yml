@@ -26,17 +26,11 @@ jobs:
       - name: Sonarqube Begin
         run: | 
           dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /o:someorg /k:somekey /d:sonar.login=${{ secrets.SONAR_TOKEN }} /s:$GITHUB_WORKSPACE/SonarQube.Analysis.xml
+          dotnet sonarscanner begin /k:"teste_action" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
 
       - name: Build
         run: dotnet build
 
-      - name: Test with the dotnet CLI
-        run: dotnet test --settings coverlet.runsettings --logger:trx
-        env:
-          ASPNETCORE_ENVIRONMENT: Development
-
       - name: Sonarqube end
-        run: dotnet sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet sonarscanner end /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
+    
