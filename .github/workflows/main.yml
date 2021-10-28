@@ -1,34 +1,53 @@
+name: Validate code
+
 on:
-  workflow_dispatch:
+  push:
+    branches: ["**"]
   pull_request:
-    branches: 
-      - develop
-      - release/**
-      - feature/**
+    branches: [develop]
 
 jobs:
-  validate-changes:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.2.0
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of sonarqube reporting
-          fetch-depth: 0
 
-      - name: Setup dotnet
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: 5.0.100-preview.2.20176.6
 
-      - name: Install dependencies
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        run: dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
+
+      - name: Install project dependencies
         run: dotnet restore
 
-      - name: Sonarqube Begin
-        run: | 
-          dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:"teste_action" /d:sonar.host.url="http://localhost:9000"  /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
-      - name: Build
-        run: dotnet build
+      - name: Test and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          ./.sonar/scanner/dotnet-sonarscanner begin /k:"ftathiago_esbc" /o:"ftathiago" /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover -l trx
+          ./.sonar/scanner/dotnet-sonarscanner end /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
 
-      - name: Sonarqube end
-        run: dotnet sonarscanner end /d:sonar.login="ec4438f89622e0b8f4b5e8a224578b9a9a2ab164"
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
