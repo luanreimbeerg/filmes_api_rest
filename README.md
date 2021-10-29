@@ -1,6 +1,6 @@
 # PASSOS PARA RODAR SonarQube LOCALMENTE
 
-1.Primeiro passo configuração SonarQube... 
+1. Primeiro passo configuração SonarQube... 
 
 * Deve baixar o SonarQube no site (https://www.sonarqube.org/downloads/), baixar a versão Community;
 
@@ -32,8 +32,30 @@
 
 * Então execultar o comando StartSonar.bat para subir na porta:localhost:9000/about; * obs: Caso de erro reiniciar a maquina e tentar novamente; 
 
-2.Segundo passo Criação do projeto no localhost:9000/about;
+2. Segundo passo Criação do projeto no localhost:9000/about;
 
 * Assim que o servidor subir e a pagina for carregada, deve clicar em Projects e em create Project, selecione Manually;
 
 <img src="exemplos/projetos.png">
+
+* Em seguida coloque o nome do projeto e precione Set Up;
+
+<img src="exemplos/create_project.png">
+
+* Quando carregar a tela selecione 'Locally';
+
+<img src="exemplos/local.png">
+
+* Coloque uma palavra para gerar o token;
+
+<img src="">
+  
+* Clique em continuar e escolha o opção .Net Core;
+
+<img src="">
+
+* Execute os comando dentro do diretorio pelo cmd, no projeto onde sera feito os teste;
+
+* Por fim voltando ao menu em Projects podemos ver o teste execultado...
+
+<img src="">
