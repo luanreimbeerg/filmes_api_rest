@@ -22,6 +22,7 @@ namespace filmes_api_rest
         {
             Configuration = configuration;
         }
+        
 
         public IConfiguration Configuration { get; }
 

@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 
+
 namespace filmes_api_rest.Controllers
 {
     [ApiController]
@@ -16,14 +17,14 @@ namespace filmes_api_rest.Controllers
     {
         [HttpPost]
 
-        public Models.TbAtor Salvar(Models.TbAtor ator)    
+        public Models.TbAtor Salvar(Models.TbAtor ato)    
         {
             Models.apiDBContext ctx = new Models.apiDBContext();
 
-            ctx.TbAtor.Add(ator);
+            ctx.TbAtor.Add(ato);
             ctx.SaveChanges();
             
-            return ator;
+            return ato;
         }
 
 
